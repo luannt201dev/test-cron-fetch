@@ -31,16 +31,32 @@ app.get("/", async (req, res) => {
     try {
         const testCron = await db.collection("test-cron");
         await testCron.insertOne({
-            time: new Date().toISOString()
+            time: new Date().toISOString(), 
+            body: "get"
         })
-        res.status(201).json({message: "oke"})
+        res.status(200).json({message: "oke"})
     }
     catch (er) {
         console.log(er)
         res.status(500).json({message: "not oke"})
 
     }
-    
+})
+
+app.post("/", async (req, res) => {
+  try {
+    const testCron = await db.collection("test-cron");
+    await testCron.insertOne({
+        time: new Date().toISOString(),
+        body: req.body
+    })
+    res.status(201).json({message: "oke"})
+}
+catch (er) {
+    console.log(er)
+    res.status(500).json({message: "not oke"})
+
+}
 })
 
 const PORT = process.env.PORT || 3868
